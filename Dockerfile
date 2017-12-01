@@ -16,7 +16,10 @@ RUN apt-get update && apt-get install -y -q r-base  \
                     && apt-get clean \
                     && rm -rf /tmp/* /var/tmp/*  \
                     && rm -rf /var/lib/apt/lists/*
-                    
+
+RUN mkdir /usr/local/lib/R/site-library/shiny/
+RUN mkdir /usr/local/lib/R/site-library/shiny/examples/
+
 RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')" \
           && update-locale  \
           && wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.6.875-amd64.deb \
@@ -27,6 +30,10 @@ RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')" \
           && cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/examples/. 
           
 RUN  R -e "install.packages('rmarkdown', repos='http://cran.rstudio.com/')"
+RUN  R -e "install.packages('shinydashboard', repos='http://cran.rstudio.com/')"
+RUN  R -e "install.packages('data.tables', repos='http://cran.rstudio.com/')"
+RUN  R -e "install.packages('dplyr', repos='http://cran.rstudio.com/')"
+RUN  R -e "install.packages('ggplot2', repos='http://cran.rstudio.com/')"
 
 ##startup scripts  
 #Pre-config scrip that maybe need to be run one time only when the container run the first time .. using a flag to don't 
